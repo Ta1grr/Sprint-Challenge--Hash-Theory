@@ -9,6 +9,17 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 
   // YOUR CODE HERE
 
+
+  int i = 0;
+  int j = 0;
+  for ( ; i < length; i++) {
+    for ( ; j < length; j++) {
+      if (weights[i] - weights[j] == limit) {
+        
+      }
+    }
+  }
+
   return NULL;
 }
 
