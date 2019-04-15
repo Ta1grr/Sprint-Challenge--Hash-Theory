@@ -8,25 +8,37 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   HashTable *ht = create_hash_table(16);
 
   // YOUR CODE HERE
-
-
-  int i = 0;
-  int j = 0;
-  for ( ; i < length; i++) {
-    for ( ; j < length; j++) {
-      if (weights[i] - weights[j] == limit) {
-        
+  // insert all weights into the hash table as the key, and weight's list index as the value
+  for (int i = 0; i < length; i++){
+    int complement = limit - weights[i];
+    // check if the complement exist in the hash table
+    int retrieved = hash_table_retrieve(ht, complement);
+      if (retrieved != -1) {
+        Answer *answer = malloc(sizeof(Answer));
+        answer->index_1 = i;
+        answer->index_2 = retrieved;
+        destroy_hash_table(ht);
+        return answer;
       }
-    }
+      else {
+        hash_table_insert(ht, weights[i], i);
+      }
+    // hash_table_insert(ht, weights, i);
   }
+  // loop through the weight and check the difference and retrieve from the hash table
+  // if return -1 then it doesn't exist, otherwise return the value
+  // index 1 can be the weight
+  // index 2 can be the difference from limit - weight.
+
+
 
   return NULL;
 }
 
-void print_answer(Answer *answer)
+void print_answer(Answer *answers)
 {
-  if (answer != NULL) {
-    printf("%d %d\n", answer->index_1, answer->index_2);
+  if (answers != NULL) {
+    printf("%d %d\n", answers->index_1, answers->index_2);
   } else {
     printf("NULL\n");
   }
